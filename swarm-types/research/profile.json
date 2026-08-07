@@ -1,0 +1,14 @@
+{
+  "name": "research",
+  "profile_version": "1.0.0",
+  "description": "Evidence-first research swarm for current or deep research, analysis, synthesis, and source-grounded deliverables.",
+  "config_defaults": {
+    "orchestrator": {
+      "role": "Research Director / Orchestrator"
+    },
+    "worker": {
+      "role": "Research Execution Lead"
+    },
+    "evidence_standard": "Traceable sources for material claims; primary sources preferred; fact/inference/recommendation separated; independent citation and synthesis QA"
+  }
+}

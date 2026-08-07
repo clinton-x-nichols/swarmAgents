@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "swarm": {
+    "name": "UNCONFIGURED SWARM",
+    "slug": "unconfigured-swarm",
+    "mission": "TBD",
+    "definition_of_done": "TBD",
+    "owner": "TBD",
+    "type": "general"
+  },
+  "orchestrator": {
+    "name": "TBD",
+    "platform": "ChatGPT",
+    "model": "TBD",
+    "role": "Solution Architect / Orchestrator",
+    "personality": "TBD",
+    "role_file": "roles/orchestrator.md"
+  },
+  "worker": {
+    "name": "TBD",
+    "platform": "Claude Code",
+    "model": "TBD",
+    "role": "Implementation / Execution Engineer",
+    "personality": "TBD",
+    "role_file": "roles/worker.md"
+  },
+  "communications": {
+    "substantive_channel": "TBD",
+    "notices_channel": "TBD",
+    "threaded_work": true
+  },
+  "repository": {
+    "url": "TBD",
+    "default_branch": "main",
+    "current_state_file": "state/CURRENT_STATE.md"
+  },
+  "systems_of_record": [
+    "GitHub repository for durable coordination and design state"
+  ],
+  "owner_approval_required_for": [
+    "destructive actions",
+    "production changes",
+    "external publishing/deployment",
+    "financial/billable actions",
+    "credential/security-sensitive actions",
+    "actions the underlying agent platform requires the owner to authorize directly"
+  ],
+  "evidence_standard": "TBD",
+  "external_role_prompt_research": true,
+  "status": "UNCONFIGURED"
+}

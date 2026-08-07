@@ -1,0 +1,18 @@
+# local/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+
+# secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# local scratch
+scratch/
+tmp/

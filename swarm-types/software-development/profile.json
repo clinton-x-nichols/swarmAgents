@@ -1,0 +1,14 @@
+{
+  "name": "software-development",
+  "profile_version": "1.0.0",
+  "description": "Software engineering swarm for design, implementation, tests, review, CI debugging, and controlled delivery.",
+  "config_defaults": {
+    "orchestrator": {
+      "role": "Software Architect / Orchestrator"
+    },
+    "worker": {
+      "role": "Implementation Engineer"
+    },
+    "evidence_standard": "Tests and reproducible checks for changed behavior; code review for consequential changes; CI status and diff evidence; release/deploy remains owner-gated"
+  }
+}

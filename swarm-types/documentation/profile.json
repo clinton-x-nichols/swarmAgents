@@ -1,0 +1,14 @@
+{
+  "name": "documentation",
+  "profile_version": "1.0.0",
+  "description": "Documentation swarm for source-grounded authoring, restructuring, editing, and publication-quality documentation.",
+  "config_defaults": {
+    "orchestrator": {
+      "role": "Documentation Architect / Orchestrator"
+    },
+    "worker": {
+      "role": "Documentation Production Lead"
+    },
+    "evidence_standard": "Every substantive statement grounded in authoritative source material; mechanical/readback and rendered QA where applicable; unresolved gaps marked explicitly"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "general",
+  "profile_version": "1.0.0",
+  "description": "Neutral two-agent swarm for mixed bounded knowledge work.",
+  "config_defaults": {
+    "orchestrator": {
+      "role": "Solution Architect / Orchestrator"
+    },
+    "worker": {
+      "role": "Implementation / Execution Engineer"
+    },
+    "evidence_standard": "Evidence appropriate to the task; independent verification for consequential work"
+  }
+}
