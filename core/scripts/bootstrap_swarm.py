@@ -14,6 +14,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "swarm-config.json"
 PROTOCOL_VERSION = "1.1.0"
 
+UNCONFIGURED_VALUES = {"", "TBD", "UNCONFIGURED", "UNCONFIGURED SWARM"}
+
 
 def ask(label: str, default: str = "") -> str:
     suffix = f" [{default}]" if default else ""
@@ -35,6 +37,32 @@ def load() -> dict:
 
 def save(config: dict) -> None:
     CONFIG.write_text(json.dumps(config, indent=2) + "\n")
+
+
+def is_unconfigured(config: dict) -> bool:
+    """Return True when the scaffold has not completed interactive bootstrap."""
+    if str(config.get("status", "")).strip().upper() == "UNCONFIGURED":
+        return True
+
+    sw = config.get("swarm", {})
+    orch = config.get("orchestrator", {})
+    worker = config.get("worker", {})
+    comms = config.get("communications", {})
+    repo = config.get("repository", {})
+    required_values = [
+        sw.get("name"),
+        sw.get("mission"),
+        sw.get("definition_of_done"),
+        sw.get("owner"),
+        orch.get("name"),
+        orch.get("model"),
+        worker.get("name"),
+        worker.get("model"),
+        comms.get("substantive_channel"),
+        comms.get("notices_channel"),
+        repo.get("url"),
+    ]
+    return any(str(value or "").strip().upper() in UNCONFIGURED_VALUES for value in required_values)
 
 
 def generate(config: dict) -> None:
@@ -116,11 +144,26 @@ After commissioning, use notices only for HELLO/GOODBYE and STARTED/STILL WORKIN
     (ROOT / "generated" / "chatgpt-bootstrap-prompt.md").write_text(orch_prompt)
     (ROOT / "generated" / "worker-bootstrap-prompt.md").write_text(worker_prompt)
 
+    if is_unconfigured(config):
+        lifecycle_state = "UNCONFIGURED — BOOTSTRAP NOT RUN"
+        active_work = "none — commissioning scaffold only"
+        last_action = "Parent template scaffold prepared"
+        awaiting = "Instantiate a live swarm and run `python3 scripts/bootstrap_swarm.py`"
+        pending_decisions = "Mission, definition of done, final role design, systems of record, evidence standard, authority/security boundaries"
+        latest_commit = "Parent library/template commit; replace after first live-swarm commit"
+    else:
+        lifecycle_state = "CONFIGURED — OWNER INTERVIEW / ROLE RESEARCH PENDING"
+        active_work = "COMM-001"
+        last_action = "Bootstrap configuration generated"
+        awaiting = "Orchestrator commissioning interview and role/prompt research"
+        pending_decisions = "Final role design, systems of record, evidence standard, authority/security boundaries"
+        latest_commit = "Update after first commit/push"
+
     current = f"""# Current State
 
 - **Swarm:** {sw['name']}
 - **Type:** {sw.get('type', 'general')}
-- **State:** CONFIGURED — OWNER INTERVIEW / ROLE RESEARCH PENDING
+- **State:** {lifecycle_state}
 - **Protocol:** {PROTOCOL_VERSION}
 - **Mission:** {sw['mission']}
 - **Definition of done:** {sw['definition_of_done']}
@@ -131,11 +174,11 @@ After commissioning, use notices only for HELLO/GOODBYE and STARTED/STILL WORKIN
 - **Notices channel:** {comms['notices_channel']}
 - **Memory index:** {memory_index}
 - **Engineering notebook:** {notebook_index}
-- **Active work item:** COMM-001
-- **Last material action:** Bootstrap configuration generated
-- **Awaiting:** Orchestrator commissioning interview and role/prompt research
-- **Pending owner decisions:** Final role design, systems of record, evidence standard, authority/security boundaries
-- **Latest relevant commit:** Update after first commit/push
+- **Active work item:** {active_work}
+- **Last material action:** {last_action}
+- **Awaiting:** {awaiting}
+- **Pending owner decisions:** {pending_decisions}
+- **Latest relevant commit:** {latest_commit}
 
 ## Recovery note
 
@@ -191,6 +234,7 @@ def main():
     generate(config)
     print("Generated swarm-config.json, current state, and bootstrap prompts.")
     print("Next: python scripts/validate_swarm.py")
+
 
 if __name__ == "__main__":
     main()
