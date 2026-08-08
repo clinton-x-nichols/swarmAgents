@@ -11,10 +11,11 @@ It is deliberately separate from `core/engineering-notebook/`. The `core/` noteb
 3. `03_DECISION_REGISTER.md` — accepted, proposed, superseded, rejected, and deferred decisions.
 4. `04_CONSTRUCTION_NOTES.md` — detailed technical reasoning, alternatives, experiments, failures, and evidence.
 5. `05_OPEN_QUESTIONS.md` — genuine unresolved dependencies and Owner decisions.
-6. `06_PROPOSED_ARCHITECTURE.md` — current architecture proposal; not authoritative until accepted.
-7. `07_LANDSCAPE_RESEARCH.md` — current external-product and architecture-pattern research.
+6. `06_PROPOSED_ARCHITECTURE.md` — first full architecture proposal; retained as design history.
+7. `07_LANDSCAPE_RESEARCH.md` — external-product and architecture-pattern research.
 8. `08_WORK_QUEUE.md` — bounded project work and sequencing.
 9. `09_RECONCILIATION_LOG.md` — material source/state contradictions and how they were resolved.
+10. `10_ARCHITECTURE_REVIEW_2026_08_08.md` — current architecture refinement after Owner feedback; architecture/functionality-first control-plane design.
 
 ## Information ownership
 
@@ -24,6 +25,7 @@ It is deliberately separate from `core/engineering-notebook/`. The `core/` noteb
 - **Construction notes** own detailed reasoning, experiments, alternatives, and failure/success records.
 - **Open questions** contain only genuine unresolved items.
 - **Work queue** owns current bounded engineering work and sequencing.
+- **Architecture review/refinement documents** may supersede earlier proposals but never silently rewrite accepted Owner decisions.
 - **Git history** proves exactly what changed.
 
 ## Write rules
@@ -38,4 +40,4 @@ It is deliberately separate from `core/engineering-notebook/`. The `core/` noteb
 
 ## Current status
 
-The project is in **architecture / rules-of-the-road formation**. The Owner has established the product outcome and several first-class requirements. The detailed control-plane architecture in `06_PROPOSED_ARCHITECTURE.md` is Daisy's proposal pending review.
+The project is in **architecture / rules-of-the-road formation**. The Owner has established the product outcome and first-class requirements. The first proposal in `06_PROPOSED_ARCHITECTURE.md` was judged too presentation-heavy. `10_ARCHITECTURE_REVIEW_2026_08_08.md` is the current refinement, centered on lifecycle semantics, providers, operational state, security, commissioning, and implementation sequencing. It remains Daisy's proposal pending Owner review.
