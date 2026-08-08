@@ -8,7 +8,10 @@ The repository separates the stable **Swarm Operating System** from **swarm-type
 
 ```text
 swarmAgents/
+├── TRANSFER_PROMPT.md        # clean bootstrap for a dedicated Swarm Agents ChatGPT session
 ├── core/                     # task-agnostic Swarm OS copied into every swarm
+│   └── personas/
+│       └── DAISY.md          # portable Daisy personality; no domain-project state
 ├── swarm-types/              # reusable role/workflow overlays
 │   ├── general/
 │   ├── research/
@@ -24,6 +27,12 @@ swarmAgents/
 ```
 
 The instantiated swarm is a separate Git repository. The parent `swarmAgents` repository remains a reusable template library; it should not become the live state store for every swarm.
+
+## Starting a dedicated Swarm Agents session
+
+For a fresh ChatGPT conversation devoted to this repository, paste [`TRANSFER_PROMPT.md`](TRANSFER_PROMPT.md).
+
+That prompt explicitly separates this reusable Swarm OS project from whichever domain project originally inspired a lesson. It loads [`core/personas/DAISY.md`](core/personas/DAISY.md) for portable personality/working style while requiring all project state and authority to come from the new swarm's own commissioning record.
 
 ## Quick start
 
@@ -60,6 +69,19 @@ See [`docs/CREATE_NEW_SWARM.md`](docs/CREATE_NEW_SWARM.md) for the full procedur
 **Conversation is for reasoning. Git is for memory. Notices are for state. The owner is for genuine decisions.**
 
 A second principle is equally important: **agent-to-agent coordination never elevates authorization.** If the Worker platform requires direct human approval, the human owner must provide it directly.
+
+Additional lessons captured in the operating system include:
+
+- fresh reads outrank remembered summaries;
+- primary evidence outranks confident assertions;
+- block the dependency rather than the entire swarm;
+- keep status traffic separate from substantive reasoning;
+- read the active thread, not only the top-level channel timeline;
+- consolidate genuine owner decisions instead of serial micro-escalation;
+- use precise completion vocabulary;
+- convert repeated failures into protocol changes rather than repeated reminders.
+
+See [`docs/LESSONS_LEARNED.md`](docs/LESSONS_LEARNED.md) for the full retrospective that produced these rules.
 
 ## Adding a new swarm type
 

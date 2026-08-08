@@ -8,6 +8,10 @@
 4. `scripts/bootstrap_swarm.py`
 5. `bootstrap/COMMISSIONING_CHECKLIST.md`
 
+## Portable persona
+
+- `personas/DAISY.md` — optional portable Daisy conversational/orchestrator personality. Carries style only; never project state or authorization.
+
 ## Shared operating system
 
 - `AGENTS.md`
