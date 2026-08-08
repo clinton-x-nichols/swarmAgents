@@ -2,8 +2,8 @@
 
 - **Swarm:** UNCONFIGURED SWARM
 - **Type:** general
-- **State:** CONFIGURED — OWNER INTERVIEW / ROLE RESEARCH PENDING
-- **Protocol:** 1.0.0
+- **State:** UNCONFIGURED — BOOTSTRAP NOT RUN
+- **Protocol:** 1.1.0
 - **Mission:** TBD
 - **Definition of done:** TBD
 - **Owner:** TBD
@@ -11,12 +11,14 @@
 - **Worker:** TBD — Implementation / Execution Engineer — Claude Code / TBD
 - **Substantive channel:** TBD
 - **Notices channel:** TBD
-- **Active work item:** COMM-001
-- **Last material action:** Bootstrap configuration generated
-- **Awaiting:** Orchestrator commissioning interview and role/prompt research
-- **Pending owner decisions:** Final role design, systems of record, evidence standard, authority/security boundaries
-- **Latest relevant commit:** Update after first commit/push
+- **Memory index:** memory/INDEX.md
+- **Engineering notebook:** engineering-notebook/00_INDEX.md
+- **Active work item:** none — commissioning scaffold only
+- **Last material action:** Parent template scaffold prepared
+- **Awaiting:** Instantiate a live swarm and run `python3 scripts/bootstrap_swarm.py`
+- **Pending owner decisions:** Mission, definition of done, final role design, systems of record, evidence standard, authority/security boundaries
+- **Latest relevant commit:** Parent library/template commit; replace after first live-swarm commit
 
 ## Recovery note
 
-Fresh-read config, protocol, decisions, open questions, work queue, notices, and the full active substantive thread before acting on a restart.
+Fresh-read memory, engineering notebook/registers, current state, current Git head, notices, and the full active substantive thread before acting on a restart.
