@@ -8,6 +8,15 @@
 4. `scripts/bootstrap_swarm.py`
 5. `bootstrap/COMMISSIONING_CHECKLIST.md`
 
+## Continuity architecture
+
+- `memory/README.md`
+- `memory/INDEX.md`
+- `engineering-notebook/00_INDEX.md`
+- `engineering-notebook/CONSTRUCTION_NOTES.md`
+- `engineering-notebook/RECONCILIATION_LOG.md`
+- `playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md`
+
 ## Portable persona
 
 - `personas/DAISY.md` — optional portable Daisy conversational/orchestrator personality. Carries style only; never project state or authorization.
@@ -20,12 +29,13 @@
 - `playbooks/SWARM_PROTOCOL.md`
 - `playbooks/SECURITY_AND_AUTHORITY.md`
 - `playbooks/MEMORY_AND_RECOVERY.md`
+- `playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md`
 - `playbooks/WORK_AND_HANDOFFS.md`
 - `playbooks/FAILURE_MODES.md`
 - `playbooks/QUALITY_GATES.md`
 - `comms/CHANNEL_PROTOCOL.md`
 
-## Durable state
+## Durable current registers
 
 - `swarm-config.json`
 - `state/CURRENT_STATE.md`
@@ -33,6 +43,8 @@
 - `state/OPEN_QUESTIONS.md`
 - `state/WORK_QUEUE.md`
 - `state/SESSION_LOG.md`
+
+The decision/open-question/work registers are logically part of the engineering notebook and are referenced from `engineering-notebook/00_INDEX.md`; do not duplicate them inside the notebook directory.
 
 ## Roles and research
 

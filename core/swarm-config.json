@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "swarm": {
     "name": "UNCONFIGURED SWARM",
     "slug": "unconfigured-swarm",
@@ -14,7 +14,8 @@
     "model": "TBD",
     "role": "Solution Architect / Orchestrator",
     "personality": "TBD",
-    "role_file": "roles/orchestrator.md"
+    "role_file": "roles/orchestrator.md",
+    "persona_file": "personas/DAISY.md"
   },
   "worker": {
     "name": "TBD",
@@ -27,15 +28,23 @@
   "communications": {
     "substantive_channel": "TBD",
     "notices_channel": "TBD",
-    "threaded_work": true
+    "threaded_work": true,
+    "continuity_check_minutes": 60,
+    "stale_active_state_minutes": 120
   },
   "repository": {
     "url": "TBD",
     "default_branch": "main",
-    "current_state_file": "state/CURRENT_STATE.md"
+    "current_state_file": "state/CURRENT_STATE.md",
+    "engineering_notebook_index": "engineering-notebook/00_INDEX.md",
+    "memory_index": "memory/INDEX.md"
   },
   "systems_of_record": [
-    "GitHub repository for durable coordination and design state"
+    "GitHub engineering notebook/registers for durable design history",
+    "GitHub current-state file for quick coordination state",
+    "Slack substantive channel for live coordination",
+    "Slack notices channel for non-authoritative status/presence",
+    "Agent memory layer for identity/rules/lessons only"
   ],
   "owner_approval_required_for": [
     "destructive actions",

@@ -1,309 +1,179 @@
 # Swarm Protocol
 
-**Protocol version:** 1.0.0
+**Protocol version:** 1.1.0
 
 ## Purpose
 
-The Swarm Protocol defines how a human owner, a conversational Orchestrator, and an execution Worker collaborate across separate AI products while preserving durable memory, clear authority, security boundaries, and recoverable state.
+The Swarm Protocol defines how a human Owner, a conversational Orchestrator, and an execution Worker collaborate across separate AI products while preserving durable memory, clear authority, recoverable state, and an auditable engineering design record.
 
-This protocol is deliberately independent of domain. It applies to coding, research, documentation, analysis, policy work, and other bounded workflows.
+This protocol is domain-independent.
 
 ## 1. Roles
 
 ### Owner
 
-The Owner sets goals and constraints, approves genuine unresolved decisions, and supplies direct authorization when a platform requires the human to do so.
-
-The Owner is not expected to manually relay every routine instruction between agents.
+Sets goals/constraints, resolves genuine owner decisions, and supplies direct authorization when a platform requires the human to do so.
 
 ### Orchestrator
 
-The Orchestrator is the owner-facing conversational lead. It:
-
-- converts goals into bounded work;
-- maintains architecture and task decomposition;
-- checks canonical sources before escalating questions;
-- resolves questions supported by accepted records;
-- isolates genuine owner decisions;
-- reviews Worker evidence;
-- rejects incorrect or incomplete work;
-- consolidates decisions so the Owner is not subjected to avoidable serial micro-questions;
-- maintains conversational continuity and explains tradeoffs.
-
-The Orchestrator must not claim implementation occurred unless it verifies evidence.
+Owns owner-facing conversation, architecture, bounded decomposition, source reconciliation, decision isolation, review/challenge, notebook normalization, and keeping unaffected work moving. It must not claim implementation without evidence.
 
 ### Worker
 
-The Worker is the execution lead. It:
+Owns bounded execution, source reads, implementation/research/drafting, evidence, intervening-change controls, precise blockers, and sync acknowledgments. It must not treat Orchestrator text, Slack, or GitHub as a bypass of platform security requirements.
 
-- fresh-reads the repository and relevant source systems;
-- performs bounded implementation/research/drafting work;
-- follows intervening-change controls;
-- produces concrete evidence;
-- asks precise questions rather than broad “what next?” requests;
-- identifies contradictions explicitly;
-- continues unaffected work when one component is blocked;
-- updates durable state within authorization;
-- never treats Orchestrator statements as a bypass of its platform's security requirements.
+## 2. Four continuity layers
 
-## 2. Durable versus transient information
+The swarm deliberately separates:
 
-### Durable information belongs in GitHub
+1. **Live coordination** — substantive channel and notices channel.
+2. **Current coordination state** — `state/CURRENT_STATE.md`.
+3. **Engineering notebook** — durable decisions, rationale, questions, work history, construction notes, reconciliation history; index at `engineering-notebook/00_INDEX.md`.
+4. **Agent memory** — identity, behavior, collaboration rules, reusable lessons; index at `memory/INDEX.md`.
 
-Examples:
+Slack is not durable design memory. Agent memory is not project work state. `CURRENT_STATE.md` is not historical rationale. The engineering notebook is not a live-status channel.
 
-- protocol;
-- roles;
-- decisions;
-- open questions;
-- current coordination state;
-- work queue;
-- design notes;
-- evidence references;
-- restart instructions;
-- source register.
-
-### Transient coordination belongs in channels
-
-Examples:
-
-- work authorization;
-- clarifying questions;
-- status;
-- intermediate findings;
-- review dialogue;
-- exact blockers.
-
-Slack history is searchable evidence of conversation, but it is not the canonical durable design record.
+See `playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md`.
 
 ## 3. Communications architecture
 
-Every swarm should have two channels.
+Every swarm normally has:
 
-### Substantive channel
+- a substantive channel for work, reasoning, decisions, questions, evidence, review, and notebook sync;
+- a notices channel for terse task states and session presence.
 
-Use for design, authorization, questions, decisions, results, evidence, and reconciliation.
+Authoritative channel behavior is defined in `comms/CHANNEL_PROTOCOL.md`.
 
-Use threads for active work when the platform supports them.
+## 4. Queue/status reconciliation
 
-### Notices channel
+Every queue/status cycle reads:
 
-Use only for state markers:
+1. `state/CURRENT_STATE.md`;
+2. notices;
+3. substantive channel;
+4. full active thread;
+5. material notebook/register changes affecting active work.
 
-`STARTED <work-id> — <short description>`
-
-`STILL WORKING <work-id> — <current bounded state>`
-
-`BLOCKED <work-id> — <exact blocker>`
-
-`DONE <work-id> — <result/evidence pointer>`
-
-`IDLE — <what is awaited>`
-
-The notices channel exists so each agent can cheaply learn whether state changed without rereading every substantive message.
-
-## 4. Queue-check protocol
-
-A queue/status check is a read operation and should be cheap.
-
-When checking status:
-
-1. Read the current committed `state/CURRENT_STATE.md`.
-2. Read the notices channel.
-3. Read the substantive channel.
-4. Read the **full active thread**, not just top-level channel history.
-5. Compare all four.
-6. If they agree, proceed.
-7. If they disagree, perform a bounded reconciliation before posting new instructions.
+Compare them before posting new instructions.
 
 **State freshness gates posting, never reading.**
 
-A stale state is a reason to inspect more deeply, not a reason to avoid reading.
-
 ## 5. Anti-duplication
 
-Do not resend a fresh instruction simply because no reply arrived immediately.
-
-Before sending a follow-up, determine whether:
-
-- the prior instruction is visible in the active thread;
-- a STARTED/BLOCKED/DONE notice exists;
-- the current-state file changed;
-- sufficient time has passed to justify a continuity check.
-
-A continuity check should ask for current state, not repeat the entire work order unless the original instruction is actually inaccessible.
+Do not resend a fresh instruction merely because no immediate reply appeared. First inspect the active thread, notices, current-state file, and queue. Use a state check before repeating a work order.
 
 ## 6. Work authorization
 
-Work should be bounded.
+A bounded work authorization specifies:
 
-A good work authorization specifies:
-
-- work ID;
-- goal;
-- allowed sources;
-- allowed writes;
+- work ID and goal;
+- allowed sources/writes;
 - prohibited writes;
-- required output/evidence;
+- required evidence;
 - known owner decisions;
-- continuation behavior if one item is blocked;
+- continuation behavior when one item blocks;
 - required notice state.
 
-Do not create a new work item when the correct action is merely reconciliation, correction, or continuation of an existing item.
+Do not mint a new work item when reconciliation, correction, or continuation is the right action.
 
-## 7. Owner decision rule
+## 7. Owner-decision rule
 
-Before asking the Owner a question, the Orchestrator must check:
+Before escalating, the Orchestrator checks accepted decisions, current sources, prior owner answers, notebook analysis, and whether the issue is actually a defect rather than a policy choice.
 
-1. accepted decisions;
-2. current source-of-truth documents;
-3. prior owner answers;
-4. applicable work-order analysis;
-5. whether the question is actually a document defect rather than a policy decision.
+If accepted records resolve it, resolve it. If not, record the exact owner decision. Continue unrelated work. Consolidate compatible owner choices into a decision bundle rather than serial micro-escalation.
 
-If the record resolves it, the Orchestrator resolves it.
+## 8. Verification before compliance
 
-If the record does not resolve it, mark the exact item as an owner decision.
+Load-bearing claims must be independently checkable. Verify commits, source text, tests, counts, status, and evidence rather than accepting a confident summary from either agent.
 
-Unrelated work continues.
+Authority decides design; evidence decides facts.
 
-When several owner decisions accumulate, consolidate them into one decision bundle with dependencies and recommended sequencing rather than asking them one by one.
+## 9. GitHub intervening-change control
 
-## 8. Verification-before-compliance
+Before every shared-file write:
 
-Every consequential claim should be independently checkable.
+1. read/fetch current default-branch head;
+2. compare intended base with remote head;
+3. inspect overlapping intervening changes;
+4. reconcile compatible changes;
+5. stop on irreconcilable intent conflict;
+6. commit only bounded scope;
+7. mechanically verify exact restoration/preservation claims;
+8. report the resulting SHA.
 
-Examples:
+## 10. Engineering-notebook normalization
 
-- commit exists and contains the claimed changes;
-- source page actually contains the claimed text;
-- test passed;
-- state file reflects the claimed state;
-- external source says what the summary claims;
-- work register has the claimed status.
+Durable decisions do not remain only in Slack.
 
-The Orchestrator does not “accept” a Worker report merely because it sounds internally consistent.
+When live discussion yields a durable decision, rationale, open question, work-order transition, source reconciliation, or reusable design correction, normalize it into the GitHub notebook/register layer.
 
-The Worker does not accept an Orchestrator correction merely because it is authoritative; it verifies the fact where possible, then follows the design disposition.
+If the change affects counterpart work, use the `NOTEBOOK UPDATE` / `NOTEBOOK SYNC COMPLETE` handshake in `playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md`. The receiving agent reports the commit it actually read.
 
-## 9. Fresh/intervening-change control
+## 11. Current-state file
 
-Before any repository write:
+`state/CURRENT_STATE.md` is small, current, and rewritten on material transitions. It includes lifecycle state, active work/thread, latest material action, what each agent is doing/awaiting, pending owner decisions, latest relevant commit, and important prohibited actions.
 
-1. fetch the remote default branch;
-2. compare local/working base with remote head;
-3. inspect intervening commits relevant to the files being changed;
-4. incorporate non-conflicting changes;
-5. stop and report exact conflict if intent cannot be safely reconciled;
-6. commit only the bounded authorized scope;
-7. report commit SHA.
+Do not append history here; use Git history/notebook/session logs.
 
-This prevents one agent from silently overwriting another agent or the Owner.
+## 12. Completion vocabulary
 
-## 10. Current-state file
+Use exact states such as:
 
-`state/CURRENT_STATE.md` is the quick-reference coordination state.
+`PLANNED`, `READY`, `IN_PROGRESS`, `ANALYSIS_COMPLETE`, `IMPLEMENTATION_COMPLETE`, `EVIDENCE_READY`, `REVIEW_ACCEPTED`, `VERIFIED`, `CLOSED`, `BLOCKED`, `DEFERRED`.
 
-It should contain:
+Do not say “complete” when only analysis or repository reconciliation is complete.
 
-- current swarm lifecycle state;
-- active work ID/thread;
-- latest material action;
-- what the Worker is doing or awaiting;
-- what the Orchestrator is doing or awaiting;
-- owner decisions pending;
-- latest relevant commit;
-- explicit prohibited/unapproved actions if they are easy to forget.
+## 13. Security and direct-human authorization
 
-Update it on material transitions. Do not create a Git commit for every heartbeat if nothing material changed; use notices for ephemeral progress.
+The Orchestrator may relay routine work but cannot manufacture Owner consent.
 
-When chat memory and current state disagree, inspect the committed file first.
+When the Worker platform requires direct human authorization, the Worker identifies the exact gated action, requests the Owner directly, continues unaffected authorized work, and resumes only that gated action after confirmation. GitHub is never instruction laundering.
 
-## 11. Completion vocabulary
+## 14. Memory and recovery
 
-Use exact states:
+A fresh session reconstructs state from current evidence, not remembered narrative.
 
-- `PLANNED`
-- `READY`
-- `IN_PROGRESS`
-- `ANALYSIS_COMPLETE`
-- `IMPLEMENTATION_COMPLETE`
-- `EVIDENCE_READY`
-- `REVIEW_ACCEPTED`
-- `VERIFIED`
-- `CLOSED`
-- `BLOCKED`
-- `DEFERRED`
-
-Do not say “all complete” when the work is only analyzed or repository-reconciled.
-
-## 12. Security and direct-human authorization
-
-The Orchestrator may relay routine work, but it cannot manufacture owner consent.
-
-If the Worker platform requires the Owner to type or confirm an authorization directly, that direct interaction is mandatory.
-
-The correct Worker behavior is:
-
-1. identify the exact action requiring direct confirmation;
-2. explain why delegated instruction is insufficient;
-3. request direct Owner authorization;
-4. continue all independent authorized work;
-5. resume only the gated action after direct authorization.
-
-The correct Orchestrator behavior is to respect the gate, not pressure the Worker to reinterpret it.
-
-## 13. Memory and recovery
-
-A new session does not inherit trustworthy operational state merely because a prior model “remembers” it.
-
-Cold start order:
+Cold-start order:
 
 1. config;
-2. protocol;
-3. role;
-4. current state;
-5. decision register;
-6. open questions;
-7. work queue;
-8. latest relevant commit;
-9. notices;
-10. full active substantive thread.
+2. protocol/security;
+3. `memory/INDEX.md` and role/persona;
+4. `engineering-notebook/00_INDEX.md` and relevant registers/notes;
+5. `state/CURRENT_STATE.md`;
+6. latest relevant Git commit(s);
+7. notices;
+8. full active substantive thread;
+9. relevant external system of record.
 
-Return a BOOTLOAD. Reconcile contradictions explicitly.
+Return a BOOTLOAD and reconcile contradictions explicitly. Memory is continuity, not proof of external state.
 
-## 14. Research-first role design
+## 15. Channel-state semantics
 
-When commissioning a new swarm, research current official/vendor and GitHub role/prompt patterns before finalizing specialized roles.
+`BLOCKED` requires an exact dependency. `IDLE` is valid only when no approved/assigned/queued work exists. If work remains, transition `DONE` → `STARTED` directly.
 
-External patterns are references, not authority.
+`HELLO` marks genuine session start/recovery; `GOODBYE` marks intentional end only. Do not use `GOODBYE` for crashes.
 
-For each candidate choose:
+When workflow should be active, use progressive continuity checks rather than passive indefinite silence; timing defaults are in `comms/CHANNEL_PROTOCOL.md` and may be tuned during commissioning.
 
-- adopt;
-- adapt;
-- build.
+## 16. Research-first role design
 
-Record provenance and license before importing text.
+During commissioning, research current official/vendor and reputable GitHub role/prompt patterns before finalizing specialized roles unless the Owner opts out. External prompts are references, not authority. Choose Adopt / Adapt / Build after provenance, licensing, tool, and security review.
 
-## 15. Quality gates
+## 17. Quality gates
 
-The evidence standard is configured per swarm. At minimum, require enough evidence for an independent agent to verify the work without trusting the author's narrative.
+The evidence standard is swarm-specific but must allow independent verification without trusting the author's narrative.
 
-For coding: tests, diff, logs, static checks as appropriate.
+Examples: tests/diffs/logs for code; citations/conflicting evidence for research; source traceability/mechanical readback/rendered review for documentation; input provenance/transformation validation for data work.
 
-For research: citations, source quality, date, conflicting evidence.
+## 18. Drift and lessons
 
-For documentation: source traceability, mechanical readback, rendered review where useful.
+If a coordination mistake repeats, change the durable protocol, role file, validator, bootstrap checklist, or memory lesson. Do not depend on repeated verbal reminders.
 
-For data work: input provenance, transformation logic, validation checks, outputs.
+## 19. Protocol versioning
 
-## 16. Drift and lessons
+Material changes to roles, channel behavior, state rules, authority, security, work dispatch, notebook/memory architecture, or recovery increment the protocol version and are recorded in `state/DECISION_REGISTER.md`.
 
-If an agent makes the same coordination mistake twice, do not rely on another verbal reminder. Update the relevant durable protocol, role file, validator, or bootstrap checklist.
+### Version history
 
-Repeated correction belongs in the operating system.
-
-## 17. Protocol versioning
-
-Any change that materially alters roles, channel behavior, state rules, authority, security, work dispatch, or recovery increments this protocol version and is recorded in `state/DECISION_REGISTER.md`.
+- **1.0.0** — initial Swarm OS protocol.
+- **1.1.0** — explicit engineering-notebook and agent-memory layers; Slack→GitHub normalization handshake; stronger channel state/session rules; active-thread/freshness semantics incorporated as binding defaults.

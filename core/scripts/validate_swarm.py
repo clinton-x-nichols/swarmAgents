@@ -10,7 +10,10 @@ ROOT=Path(__file__).resolve().parents[1]
 required=[
     "README.md","BOOTSTRAP.md","AGENTS.md","CLAUDE.md","swarm-config.json",
     "playbooks/SWARM_PROTOCOL.md","playbooks/SECURITY_AND_AUTHORITY.md",
-    "playbooks/MEMORY_AND_RECOVERY.md","comms/CHANNEL_PROTOCOL.md",
+    "playbooks/MEMORY_AND_RECOVERY.md","playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md",
+    "comms/CHANNEL_PROTOCOL.md","memory/README.md","memory/INDEX.md",
+    "engineering-notebook/00_INDEX.md","engineering-notebook/CONSTRUCTION_NOTES.md",
+    "engineering-notebook/RECONCILIATION_LOG.md",
     "state/CURRENT_STATE.md","state/DECISION_REGISTER.md","state/OPEN_QUESTIONS.md",
     "state/WORK_QUEUE.md","roles/orchestrator.md","roles/worker.md",
 ]
@@ -35,6 +38,9 @@ if cfg:
         ("worker.name", cfg.get("worker",{}).get("name")),
         ("communications.substantive_channel", cfg.get("communications",{}).get("substantive_channel")),
         ("communications.notices_channel", cfg.get("communications",{}).get("notices_channel")),
+        ("repository.current_state_file", cfg.get("repository",{}).get("current_state_file")),
+        ("repository.engineering_notebook_index", cfg.get("repository",{}).get("engineering_notebook_index")),
+        ("repository.memory_index", cfg.get("repository",{}).get("memory_index")),
     ]
     for label,value in checks:
         if not value or str(value).strip().upper() in {"TBD","UNCONFIGURED SWARM","UNCONFIGURED"}:

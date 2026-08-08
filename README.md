@@ -10,8 +10,13 @@ The repository separates the stable **Swarm Operating System** from **swarm-type
 swarmAgents/
 ├── TRANSFER_PROMPT.md        # clean bootstrap for a dedicated Swarm Agents ChatGPT session
 ├── core/                     # task-agnostic Swarm OS copied into every swarm
-│   └── personas/
-│       └── DAISY.md          # portable Daisy personality; no domain-project state
+│   ├── personas/
+│   │   └── DAISY.md          # portable Daisy personality; no domain-project state
+│   ├── memory/               # agent identity/rules/lessons continuity
+│   ├── engineering-notebook/ # durable design/history layer
+│   ├── state/                # quick current coordination + compact registers
+│   ├── comms/                # Slack/channel behavior
+│   └── playbooks/            # protocol, security, memory, notebook, QA
 ├── swarm-types/              # reusable role/workflow overlays
 │   ├── general/
 │   ├── research/
@@ -32,7 +37,22 @@ The instantiated swarm is a separate Git repository. The parent `swarmAgents` re
 
 For a fresh ChatGPT conversation devoted to this repository, paste [`TRANSFER_PROMPT.md`](TRANSFER_PROMPT.md).
 
-That prompt explicitly separates this reusable Swarm OS project from whichever domain project originally inspired a lesson. It loads [`core/personas/DAISY.md`](core/personas/DAISY.md) for portable personality/working style while requiring all project state and authority to come from the new swarm's own commissioning record.
+That prompt loads [`core/personas/DAISY.md`](core/personas/DAISY.md) for portable personality/working style while requiring all project state and authority to come from the new swarm's own commissioning record.
+
+## Continuity model
+
+Every live swarm deliberately separates:
+
+- **Slack substantive channel** — live work, reasoning, decisions, evidence, review;
+- **Slack notices channel** — terse task/session state only;
+- **`state/CURRENT_STATE.md`** — small current coordination snapshot;
+- **engineering notebook/registers** — durable decisions, rationale, open questions, work history, construction notes, reconciliation;
+- **agent memory** — identity, behavioral rules, collaboration conventions, reusable lessons;
+- **Git history** — evidence of what actually changed.
+
+The operating loop is explicit: durable Slack outcomes are normalized into GitHub, and counterpart-impacting notebook changes use a fresh-read `NOTEBOOK UPDATE` / `NOTEBOOK SYNC COMPLETE` handshake. The receiving agent reports the commit it actually read.
+
+See [`core/playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md`](core/playbooks/ENGINEERING_NOTEBOOK_AND_MEMORY.md).
 
 ## Quick start
 
@@ -66,22 +86,25 @@ See [`docs/CREATE_NEW_SWARM.md`](docs/CREATE_NEW_SWARM.md) for the full procedur
 
 ## Design principles
 
-**Conversation is for reasoning. Git is for memory. Notices are for state. The owner is for genuine decisions.**
+**Conversation reasons. Slack coordinates. Notices signal. Current state orients. The engineering notebook remembers the program. Agent memory remembers how the agents operate. Git history proves what changed.**
 
 A second principle is equally important: **agent-to-agent coordination never elevates authorization.** If the Worker platform requires direct human approval, the human owner must provide it directly.
 
-Additional lessons captured in the operating system include:
+Additional rules include:
 
 - fresh reads outrank remembered summaries;
 - primary evidence outranks confident assertions;
+- `BLOCKED` names an exact dependency;
+- `IDLE` means no executable work remains;
+- `HELLO` / `GOODBYE` distinguish session boundaries from task state;
+- state freshness gates posting, never reading;
+- every queue/status cycle reads the full active thread;
 - block the dependency rather than the entire swarm;
-- keep status traffic separate from substantive reasoning;
-- read the active thread, not only the top-level channel timeline;
 - consolidate genuine owner decisions instead of serial micro-escalation;
 - use precise completion vocabulary;
 - convert repeated failures into protocol changes rather than repeated reminders.
 
-See [`docs/LESSONS_LEARNED.md`](docs/LESSONS_LEARNED.md) for the full retrospective that produced these rules.
+See [`docs/LESSONS_LEARNED.md`](docs/LESSONS_LEARNED.md) for the retrospective that produced these rules.
 
 ## Adding a new swarm type
 
