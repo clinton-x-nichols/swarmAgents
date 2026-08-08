@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from typing import Optional
 
 ROOT = Path(__file__).resolve().parents[1]
 CORE = ROOT / "core"
@@ -50,7 +51,7 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def extract_version(text: str, pattern: str, label: str, errors: list[str]) -> str | None:
+def extract_version(text: str, pattern: str, label: str, errors: list[str]) -> Optional[str]:
     match = re.search(pattern, text, flags=re.MULTILINE)
     if not match:
         errors.append(f"cannot determine {label} version")

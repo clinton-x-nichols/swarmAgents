@@ -6,6 +6,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from typing import Optional
 
 ROOT = Path(__file__).resolve().parents[1]
 SEMVER_RE = r"(\d+\.\d+\.\d+)"
@@ -41,7 +42,7 @@ def read(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def extract_version(path: Path, pattern: str, label: str) -> str | None:
+def extract_version(path: Path, pattern: str, label: str) -> Optional[str]:
     match = re.search(pattern, read(path), flags=re.MULTILINE)
     if not match:
         errors.append(f"Cannot determine {label} version from {path.relative_to(ROOT)}")
