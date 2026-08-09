@@ -13,6 +13,19 @@ from typing import Optional
 ROOT = Path(__file__).resolve().parents[1]
 CORE = ROOT / "core"
 
+required_project_notebook = [
+    "engineering-notebook/00_INDEX.md",
+    "engineering-notebook/01_PROGRAM_CHARTER_AND_PRINCIPLES.md",
+    "engineering-notebook/02_ENGINEERING_NARRATIVE.md",
+    "engineering-notebook/03_DECISION_REGISTER.md",
+    "engineering-notebook/04_CONSTRUCTION_NOTES.md",
+    "engineering-notebook/05_OPEN_QUESTIONS.md",
+    "engineering-notebook/06_PROPOSED_ARCHITECTURE.md",
+    "engineering-notebook/07_LANDSCAPE_RESEARCH.md",
+    "engineering-notebook/08_WORK_QUEUE.md",
+    "engineering-notebook/09_RECONCILIATION_LOG.md",
+]
+
 required_core = [
     "README.md",
     "AGENTS.md",
@@ -60,6 +73,10 @@ def extract_version(text: str, pattern: str, label: str, errors: list[str]) -> O
 
 
 errors: list[str] = []
+
+for rel in required_project_notebook:
+    if not (ROOT / rel).exists():
+        errors.append(f"missing {rel}")
 
 for rel in required_core:
     if not (CORE / rel).exists():
@@ -169,3 +186,4 @@ if errors:
 print("swarmAgents validation PASSED")
 print(f"Protocol: {protocol_version}")
 print("Profiles: " + ", ".join(profiles))
+print("Parent engineering notebook: present")
