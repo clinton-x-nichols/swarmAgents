@@ -20,12 +20,17 @@ Only genuine unresolved design dependencies belong here. Facts that can be resol
 | SM-Q014 | What exact external access is allowed for provisioning/deprovisioning actions (network, sudo, systemd, package installs, containers/Kubernetes)? | Owner/security commissioning | Provider execution boundary | OPEN |
 | SM-Q015 | Which open-source visual workflow/graph editor best fits the Swarm Creation Tool requirements for editable agent connections, transactions, priorities, conditions, and logic gates while allowing Swarm Manager to keep a neutral underlying graph schema? | Technical research | Swarm Creation Tool | OPEN |
 | SM-Q016 | How should ports in the 6000–7000 range be detected, reserved, persisted, reconciled against externally occupied ports, and released during retirement? | Technical design | Per-swarm UI lifecycle | OPEN |
+| SM-Q017 | What should be the first/default **Memory Store backend** for mandatory Memory Manager: local directory, Git-backed store, Context Keep, or a hybrid? What memory classes belong in which backend if more than one is used? | Daisy + technical research + Owner at implementation boundary | Memory Manager implementation | OPEN |
+| SM-Q018 | What are the canonical durable-memory classes, mutability/supersession rules, retention rules, and shared-vs-agent-private memory boundaries? | Memory architecture research | Memory Manager schema/governance | OPEN |
+| SM-Q019 | How should transfer/recovery prompts be generated, refreshed, versioned, and validated so they remain useful recovery entry points without becoming stale competing sources of truth? | Memory/recovery architecture research | Agent recovery | OPEN |
 
 ## Resolved direction
 
 The Owner has resolved the prior architectural question about shared-vs-separate swarm dashboards: **every provisioned swarm receives a UI/dashboard and provisioning selects an available port in the 6000–7000 range.** Only the packaging/process model remains open (`SM-Q007`).
 
 The Owner has also resolved the provisioning entry-point question: normal provisioning starts from the preconfigured Blueprint Library. Designing a new swarm occurs in the separate Swarm Creation Tool.
+
+The Owner has resolved whether Memory Manager is optional: **every swarm requires it as baseline infrastructure.** The remaining memory questions are implementation/storage/schema choices, not whether the capability exists.
 
 ## Non-blocking stance
 
