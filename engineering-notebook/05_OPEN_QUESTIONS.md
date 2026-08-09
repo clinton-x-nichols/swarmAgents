@@ -4,20 +4,28 @@ Only genuine unresolved design dependencies belong here. Facts that can be resol
 
 | ID | Question | Owner / resolver | Blocking scope | Status |
 |---|---|---|---|---|
-| SM-Q001 | What API/CLI contract does the existing **Cloud Configuration Manager** expose for creating, configuring, disabling, archiving, and deleting Ubuntu identities? | Technical research / Owner if undocumented | Identity provider implementation | OPEN |
+| SM-Q001 | What exact API contract should be added to the existing **Cloud Configuration Manager** so Swarm Manager can reserve/create/configure/inspect/disable/archive/delete Ubuntu identities and related runtime configuration? | Technical design / Owner if manager internals are undocumented | Cloud Configuration Manager provider | OPEN |
 | SM-Q002 | Which Slack workspace/app credentials and scopes may Swarm Manager use to create/archive channels and manage memberships? | Owner + implementation research | Slack provider | OPEN |
 | SM-Q003 | Where should provisioned swarm repositories live by default (Owner account, organization, selectable target), and what GitHub permission model should be standard? | Owner | GitHub provider defaults | OPEN |
 | SM-Q004 | What exactly counts as “booting” an agent on each platform? ChatGPT web sessions and Claude Code/local processes have different automation/security constraints. | Platform research + Owner | Runtime provider contracts | OPEN |
 | SM-Q005 | What secrets backend should Swarm Manager use initially? Existing Cloud Configuration Manager, OS keyring/files, Vault-like service, or another system? | Owner / security design | Credentials/security | OPEN |
 | SM-Q006 | Is adding Kubernetes acceptable on this Ubuntu host if Agyn proves valuable, or must initial operation remain non-Kubernetes? | Owner | Agyn runtime evaluation | OPEN |
-| SM-Q007 | Should per-swarm dashboards be hosted by one shared Swarm Manager service with swarm-scoped routes, or generated/deployed as separate applications/processes? | Owner after architecture comparison | Swarm dashboard architecture | OPEN |
+| SM-Q007 | How should each separately provisioned swarm UI be packaged and hosted while preserving the accepted one-port-per-swarm model in the 6000–7000 range? | Architecture / implementation research | Per-swarm UI deployment | OPEN |
 | SM-Q008 | What archive retention policy applies before destructive deprovisioning? What must be retained: repo bundle, Slack export, user home snapshot, configuration manifest, secrets metadata, runtime logs? | Owner | Retirement policy | OPEN |
 | SM-Q009 | Which universal protocols beyond Slack coordination and memory should become registry-managed assets? Candidates include work-order, evidence/QA, recovery, security baseline, notebook synchronization, and agent capability schema. | Owner + architecture evolution | Protocol registry scope | OPEN |
 | SM-Q010 | Should protocol upgrades default to manual approval, per-swarm policy, or managed fleet waves? | Owner | Upgrade lifecycle | OPEN |
 | SM-Q011 | Do separate agents always require separate OS users, or can some platforms have distinct logical identities without distinct local Unix users? | Owner / platform model | Identity allocation rules | OPEN |
-| SM-Q012 | What is the minimum first release: two-agent ChatGPT+Claude swarm only, or must the first vertical slice include a multi-agent (>2) blueprint? | Owner | MVP scope | OPEN |
-| SM-Q013 | Should Swarm Manager itself own a project-management UI on day one, or should the first product track lifecycle jobs only while the parent engineering notebook remains Git-first? | Owner | Initial UI scope | OPEN |
-| SM-Q014 | What exact external access is allowed for provisioning/deprovisioning actions (network, sudo, systemd, package installs, Docker/Kubernetes)? | Owner/security commissioning | Provider execution boundary | OPEN |
+| SM-Q012 | For the first Explainer Swarm vertical slice, should commissioning start with the full Presenter/SME/Researcher/Curriculum/Writer/Reviewer team or a reduced role subset that expands as provider support matures? | Daisy + Owner at implementation boundary | First vertical-slice scope | OPEN |
+| SM-Q013 | Should Swarm Manager itself own a project-management UI on day one, or should the first product track provisioning/lifecycle while each provisioned swarm owns its own operational/project UI? | Owner | Initial UI scope | OPEN |
+| SM-Q014 | What exact external access is allowed for provisioning/deprovisioning actions (network, sudo, systemd, package installs, containers/Kubernetes)? | Owner/security commissioning | Provider execution boundary | OPEN |
+| SM-Q015 | Which open-source visual workflow/graph editor best fits the Swarm Creation Tool requirements for editable agent connections, transactions, priorities, conditions, and logic gates while allowing Swarm Manager to keep a neutral underlying graph schema? | Technical research | Swarm Creation Tool | OPEN |
+| SM-Q016 | How should ports in the 6000–7000 range be detected, reserved, persisted, reconciled against externally occupied ports, and released during retirement? | Technical design | Per-swarm UI lifecycle | OPEN |
+
+## Resolved direction
+
+The Owner has resolved the prior architectural question about shared-vs-separate swarm dashboards: **every provisioned swarm receives a UI/dashboard and provisioning selects an available port in the 6000–7000 range.** Only the packaging/process model remains open (`SM-Q007`).
+
+The Owner has also resolved the provisioning entry-point question: normal provisioning starts from the preconfigured Blueprint Library. Designing a new swarm occurs in the separate Swarm Creation Tool.
 
 ## Non-blocking stance
 
