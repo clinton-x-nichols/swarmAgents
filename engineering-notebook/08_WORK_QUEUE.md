@@ -6,7 +6,7 @@ This queue covers the `swarmAgents` parent project / Swarm Manager product, not 
 |---|---|---|---|---|---|
 | SM-W001 | Establish parent-project engineering notebook and capture charter/decisions. | Daisy | IMPLEMENTATION_COMPLETE | none | Root `engineering-notebook/` structure and records. |
 | SM-W002 | Produce proposed Swarm Manager architecture and build-vs-buy landscape review. | Daisy | IN_PROGRESS | SM-W001 | Original proposal plus `10_ARCHITECTURE_REVIEW_2026_08_08.md`; deeper research underway after Owner feedback. |
-| SM-W003 | Owner architecture review: accept, modify, reject, or defer proposed decisions SM-P001–SM-P013. | Owner | BLOCKED | SM-W002 refinement | Updated decision register / architecture direction. |
+| SM-W003 | Owner architecture review: accept, modify, reject, or defer proposed decisions SM-P001–SM-P016. | Owner | BLOCKED | SM-W002 refinement | Updated decision register / architecture direction. |
 | SM-W004 | Inventory existing Cloud Configuration Manager interfaces and host constraints. | Daisy / Worker | READY | none | API/CLI capability map; closes or narrows host/provider questions. |
 | SM-W005 | Technical proof-of-fit: Agyn, Agno, Microsoft Agent Framework, OpenAI Agents SDK, Hermes, and native runtime adapters. | Daisy / Worker | READY | none | Runtime capability/security/integration matrix. |
 | SM-W006 | Define v1 `SwarmSpec`, blueprint schema, provider capability contract, resource ledger, and lifecycle state machine. | Daisy | READY_FOR_DESIGN | SM-W002 | Versioned schemas and examples; no implementation yet. |
@@ -16,8 +16,12 @@ This queue covers the `swarmAgents` parent project / Swarm Manager product, not 
 | SM-W010 | Implement ChatGPT/Claude runtime adapters, Boot Manifest compilation, and commissioning suite. | Worker + Daisy review | BLOCKED | SM-W005, SM-W009 | End-to-end commissioning evidence. |
 | SM-W011 | Prove create→commission→reconcile→archive vertical slice without destructive deletion. | Worker + Daisy review | BLOCKED | SM-W010 | Verified lifecycle evidence. |
 | SM-W012 | Implement minimal light UI on port 5015 as a client of stable lifecycle APIs. | Worker | BLOCKED | SM-W011 | Clean Google/Material-style fleet/create/plan/job/status workflow. |
-| SM-W013 | Implement richer Blueprint Catalog, Swarm Builder, and optional per-swarm dashboard modules. | Worker + Daisy review | BLOCKED | SM-W012 | Modular catalog/builder/dashboard capabilities. |
+| SM-W013 | Implement richer Blueprint Catalog, Swarm Builder, and optional per-swarm dashboard module framework. | Worker + Daisy review | BLOCKED | SM-W012 | Modular catalog/builder/dashboard capabilities. |
 | SM-W014 | Implement destructive retirement after archive with explicit Owner gate and residual-resource verification. | Worker + Daisy review | BLOCKED | SM-W011 | Verified archive + destroy evidence. |
+| SM-W015 | Define Token Monitor telemetry schema, runtime capability hooks, efficiency scoring methodology, capture/redaction levels, and report-card model. | Daisy / Worker | FUTURE_DESIGN | SM-W005, SM-W013 | Versioned token-observability design and test fixtures. |
+| SM-W016 | Define Memory Manager data model, durable-memory browser/governance rules, recurrence configuration, recall challenge protocol, and memory-drift classifications. | Daisy / Worker | FUTURE_DESIGN | memory protocol maturity, SM-W013 | Versioned memory-reconciliation design and UI contract. |
+| SM-W017 | Define and implement optional Token & Memory Steward swarm role/agent, including recommendation authority boundaries and operational handoffs. | Daisy / Worker | FUTURE | SM-W015, SM-W016 | Role specification, boot manifest requirements, evidence and review tests. |
+| SM-W018 | Implement Token Monitor and Memory Manager dashboard modules, with swarm summary and per-agent drill-down; final one-page-vs-separate-page layout decided from usability evidence. | Worker + Daisy review | FUTURE | SM-W013, SM-W015, SM-W016 | Working modules, telemetry/reconciliation tests, user-management flows. |
 
 ## Current queue head
 
@@ -27,6 +31,8 @@ Independent work that should continue now:
 2. **SM-W004** — inventory Cloud Configuration Manager and host integration surfaces.
 3. **SM-W005** — runtime/provider proof-of-fit.
 4. **SM-W006 / SM-W007** — design schemas and failure semantics; these are architecture work, not implementation authorization.
+
+The Token Monitor, Memory Manager, and Token & Memory Steward are accepted future capabilities, but implementation is intentionally downstream of the stable lifecycle APIs, runtime observability capabilities, and dashboard module framework.
 
 UI implementation is intentionally downstream of the proven headless lifecycle slice.
 
